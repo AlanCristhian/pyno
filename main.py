@@ -1,3 +1,4 @@
+import ctypes
 import tkinter
 
 import settings
@@ -18,16 +19,17 @@ class App(tkinter.Tk, settings.TkConfiguration):
             borderwidth=0,
             padx=0,
             pady=0,
-
-            foreground="#cfcfcf",
-            background="#282828",
-            insertbackground="#ffffff",
-            font=("Consolas", 16)
+            font=self.configuration.font,
+            **self.configuration.main,
         )
-        self.main.grid(row=0, column=0)
+        self.main.grid(row=0, column=0,
+            sticky=tkinter.N + tkinter.S + tkinter.W + tkinter.E)
+        self.main.grid_columnconfigure(0, weight=1)
+        self.monitor_color_mode(self.filename)
 
 
 if __name__ == "__main__":
     app = App()
     app.deiconify()
+    app.main.focus_set()
     app.mainloop()
